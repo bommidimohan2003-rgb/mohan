@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Travel - Home</title>
+  <style>
+    * {margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
+    body {background:#0f0f0f;color:#fff;line-height:1.6;}
+
+    /* Navbar */
+    nav {
+      width:100%;height:70px;background:#1a1a1a;display:flex;
+      justify-content:space-between;align-items:center;
+      padding:0 50px;position:fixed;top:0;left:0;z-index:1000;
+      box-shadow:0 2px 5px rgba(0,0,0,0.5);
+    }
+    .logo {font-size:24px;font-weight:700;color:#fff;letter-spacing:2px;}
+    .nav-links {display:flex;list-style:none;gap:30px;align-items:center;}
+    .nav-links li a {
+      text-decoration:none;color:#fff;font-size:16px;font-weight:500;
+      transition:0.3s ease;position:relative;
+    }
+    .nav-links li a::after {
+      content:"";position:absolute;left:0;bottom:-6px;width:0%;
+      height:2px;background:#00c6ff;transition:0.3s ease;
+    }
+    .nav-links li a:hover::after {width:100%;}
+    .hamburger {display:none;flex-direction:column;cursor:pointer;gap:6px;}
+    .hamburger span {width:28px;height:3px;background:#fff;border-radius:3px;transition:0.3s;}
+    @media (max-width:768px){
+      .nav-links {
+        position:absolute;top:70px;right:-100%;flex-direction:column;
+        background:#1a1a1a;width:200px;height:100vh;padding-top:50px;
+        transition:0.4s ease;
+      }
+      .nav-links.active {right:0;}
+      .hamburger {display:flex;}
+    }
+
+    /* Dropdown */
+    .user-menu {position:relative;}
+    .user-btn {cursor:pointer;font-weight:600;color:#fff;}
+    .dropdown {
+      display:none;position:absolute;top:40px;right:0;background:#222;
+      border-radius:6px;box-shadow:0 4px 10px rgba(0,0,0,0.5);
+      min-width:180px;z-index:2000;padding:10px;
+    }
+    .dropdown p {margin:0 0 10px;font-size:14px;color:#ddd;}
+    .dropdown button {
+      background:#e74c3c;padding:8px 12px;border:none;border-radius:6px;
+      font-size:14px;font-weight:600;color:#fff;cursor:pointer;transition:0.3s;
+      width:100%;
+    }
+    .dropdown button:hover {background:#c0392b;}
+    .dropdown.show {display:block;}
+
+    /* Slideshow */
+    .slideshow-container {
+      position:relative;max-width:85%;margin:90px auto 20px;
+      overflow:hidden;border-radius:16px;
+      box-shadow:0 6px 20px rgba(0,0,0,0.5);
+    }
+    .mySlides {display:none;position:relative;}
+    .mySlides img {
+      width:100%;height:50vh;max-height:600px;object-fit:cover;border-radius:16px;
+    }
+    .text {
+      color:#fff;font-size:24px;font-weight:600;padding:10px 20px;
+      position:absolute;bottom:20px;left:50%;transform:translateX(-50%);
+      background:rgba(0,0,0,0.5);border-radius:8px;
+    }
+    .prev,.next {
+      cursor:pointer;position:absolute;top:50%;padding:14px;margin-top:-30px;
+      color:white;font-weight:bold;font-size:24px;transition:0.3s;
+      border-radius:50%;background:rgba(0,0,0,0.4);user-select:none;
+    }
+    .next {right:15px;} .prev {left:15px;}
+    .prev:hover,.next:hover {background:rgba(0,0,0,0.7);}
+    .dots {margin-top:15px;text-align:center;}
+    .dot {
+      cursor:pointer;height:12px;width:12px;margin:0 4px;background:#bbb;
+      border-radius:50%;display:inline-block;transition:background-color 0.6s;
+    }
+    .active,.dot:hover {background-color:#00c6ff;}
+
+    /* Cities Section */
+    .cities {padding:60px 8%;text-align:center;}
+    .cities h2 {font-size:34px;margin-bottom:30px;color:#00c6ff;}
+    .city-grid {
+      display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+      gap:25px;
+    }
+    .city-card {
+      background:#1c1c1c;border-radius:12px;overflow:hidden;
+      box-shadow:0 4px 12px rgba(0,0,0,0.5);transition:0.3s;cursor:pointer;
+    }
+    .city-card img {width:100%;height:200px;object-fit:cover;}
+    .city-card h3 {font-size:20px;margin:15px 0;color:#fff;}
+    .city-card p {font-size:14px;color:#bbb;padding:0 15px 20px;}
+    .city-card:hover {transform:translateY(-6px);}
+
+    /* Places Section */
+    .places {padding:50px 8%;text-align:center;display:none;}
+    .places h2 {font-size:30px;margin-bottom:20px;color:#00c6ff;}
+    .place-list {
+      display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+      gap:20px;margin-top:20px;
+    }
+    .place-card {
+      background:#1c1c1c;border-radius:10px;overflow:hidden;
+      box-shadow:0 4px 12px rgba(0,0,0,0.4);transition:0.3s;cursor:pointer;
+    }
+    .place-card img {width:100%;height:160px;object-fit:cover;}
+    .place-card h4 {margin:10px;color:#fff;}
+    .place-card p {font-size:13px;color:#bbb;padding:0 10px 15px;}
+    .place-card:hover {transform:scale(1.03);}
+
+    /* Place Details Section */
+    .place-details {
+      padding:60px 8%;background:#1a1a1a;margin-top:30px;display:none;
+      border-radius:12px;box-shadow:0 6px 20px rgba(0,0,0,0.5);
+    }
+    .place-details h2 {font-size:28px;color:#00c6ff;margin-bottom:15px;}
+    .place-details img {
+      width:100%;max-height:400px;object-fit:cover;border-radius:12px;
+      margin-bottom:20px;
+    }
+    .place-details p {font-size:15px;color:#ddd;line-height:1.6;}
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <nav>
+    <div class="logo">Travel & Tourism</div>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#">Home</a></li>
+      <li><a href="services.html">Services</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li><a href="travel.html">Trip</a></li>
+      <li class="user-menu">
+        <span id="welcomeUser" class="user-btn"></span>
+        <div id="userDropdown" class="dropdown">
+          <p id="userEmail"></p>
+          <button id="logoutBtn">Logout</button>
+        </div>
+      </li>
+    </ul>
+    <div class="hamburger" onclick="toggleMenu()"><span></span><span></span><span></span></div>
+  </nav>
+
+  <!-- Slideshow -->
+  <section class="slideshow-container">
+    <div class="mySlides fade"><img src="Beach.jpg"><div class="text">Relax on Indian Beaches</div></div>
+    <div class="mySlides fade"><img src="mountain.jpg"><div class="text">Explore the Himalayas</div></div>
+    <div class="mySlides fade"><img src="City.jpg"><div class="text">Discover Vibrant Indian Cities</div></div>
+    <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+    <a class="next" onclick="plusSlides(1)">&#10095;</a>
+  </section>
+  <div class="dots">
+    <span class="dot" onclick="currentSlide(1)"></span>
+    <span class="dot" onclick="currentSlide(2)"></span>
+    <span class="dot" onclick="currentSlide(3)"></span>
+  </div>
+
+  <!-- Cities Section -->
+  <section class="cities">
+    <h2>Top Indian Cities to Visit</h2>
+    <div class="city-grid">
+      <div class="city-card" onclick="showPlaces('delhi')"><img src="delhi.jpg"><h3>Delhi</h3><p>The capital of India, home to India Gate, Red Fort, Qutub Minar and rich heritage.</p></div>
+      <div class="city-card" onclick="showPlaces('mumbai')"><img src="mumbai.jpg"><h3>Mumbai</h3><p>The city of dreams, famous for Bollywood, Gateway of India, and Marine Drive.</p></div>
+      <div class="city-card" onclick="showPlaces('jaipur')"><img src="jaipur.jpg"><h3>Jaipur</h3><p>The Pink City, known for Hawa Mahal, Amer Fort, and vibrant Rajasthani culture.</p></div>
+      <div class="city-card" onclick="showPlaces('varanasi')"><img src="varanasi.jpg"><h3>Varanasi</h3><p>The spiritual capital of India, famous for Ganga Aarti, temples, and ghats.</p></div>
+    </div>
+  </section>
+
+  <!-- Places Section -->
+  <section id="placesSection" class="places">
+    <h2 id="placesTitle"></h2>
+    <div id="placesList" class="place-list"></div>
+  </section>
+
+  <!-- Place Details Section -->
+  <section id="placeDetails" class="place-details">
+    <h2 id="detailTitle"></h2>
+    <img id="detailImg" src="" alt="">
+    <p id="detailDesc"></p>
+  </section>
+
+  <script>
+    // Navbar toggle
+    const navLinks=document.getElementById('navLinks');
+    function toggleMenu(){navLinks.classList.toggle('active');}
+
+    // ✅ Auth check
+    const user = JSON.parse(localStorage.getItem("currentUser"));
+    if(!user){
+      window.location.href="login.html"; // redirect to login if not logged in
+    } else {
+      document.getElementById("welcomeUser").textContent=`Hi, ${user.name}`;
+      document.getElementById("userEmail").textContent=user.email;
+    }
+
+    // Dropdown toggle
+    const userBtn=document.getElementById("welcomeUser");
+    const dropdown=document.getElementById("userDropdown");
+    userBtn.addEventListener("click",()=>dropdown.classList.toggle("show"));
+
+    // Logout
+    document.getElementById("logoutBtn").addEventListener("click",()=>{
+      localStorage.removeItem("currentUser");
+      window.location.href="login.html";
+    });
+
+    // Slideshow
+    let slideIndex=1;showSlides(slideIndex);
+    function plusSlides(n){showSlides(slideIndex+=n);}
+    function currentSlide(n){showSlides(slideIndex=n);}
+    function showSlides(n){
+      let i;let slides=document.getElementsByClassName("mySlides");
+      let dots=document.getElementsByClassName("dot");
+      if(n>slides.length){slideIndex=1}
+      if(n<1){slideIndex=slides.length}
+      for(i=0;i<slides.length;i++){slides[i].style.display="none";}
+      for(i=0;i<dots.length;i++){dots[i].className=dots[i].className.replace(" active","");}
+      slides[slideIndex-1].style.display="block";
+      dots[slideIndex-1].className+=" active";
+    }
+    setInterval(()=>{plusSlides(1);},5000);
+
+    // Places Data
+    const placesData = {
+      delhi:[
+        {name:"India Gate",img:"indiangate1.jpg",desc:"War memorial and iconic landmark of Delhi."},
+        {name:"Red Fort",img:"redfort.jpg",desc:"Historic Mughal fort and UNESCO World Heritage site."},
+        {name:"Qutub Minar",img:"qutub.jpg",desc:"Tallest brick minaret in the world."}
+      ],
+      mumbai:[
+        {name:"Gateway of India",img:"gateway.jpg",desc:"Historic arch-monument overlooking the Arabian Sea."},
+        {name:"Marine Drive",img:"marinedrive.jpg",desc:"Famous boulevard with sea-facing views."},
+        {name:"Elephanta Caves",img:"elephantacaves.jpg",desc:"Ancient rock-cut caves with Hindu sculptures."}
+      ],
+      jaipur:[
+        {name:"Hawa Mahal",img:"hawamahal.jpg",desc:"The Palace of Winds with 953 windows."},
+        {name:"Amer Fort",img:"amberfort.jpg",desc:"Magnificent fort overlooking Maota Lake."},
+        {name:"City Palace",img:"citypalace.jpg",desc:"Royal residence with museums and courtyards."}
+      ],
+      varanasi:[
+        {name:"Ganga Aarti",img:"gangaarti.jpg",desc:"Spiritual evening ceremony on river ghats."},
+        {name:"Kashi Vishwanath Temple",img:"kasiviswanath.jpg",desc:"One of the most sacred Hindu temples."},
+        {name:"Dashashwamedh Ghat",img:"dashashwamedhGhat.jpg",desc:"Main and most vibrant ghat in Varanasi."}
+      ]
+    };
+
+    // Show Places on City Click
+    function showPlaces(city){
+      const placesSection=document.getElementById("placesSection");
+      const placesList=document.getElementById("placesList");
+      const placesTitle=document.getElementById("placesTitle");
+      placesList.innerHTML="";
+      placesTitle.textContent="Famous Places in "+city.charAt(0).toUpperCase()+city.slice(1);
+      placesData[city].forEach(p=>{
+        const card=document.createElement("div");
+        card.className="place-card";
+        card.innerHTML=`<img src="${p.img}" alt="${p.name}"><h4>${p.name}</h4><p>${p.desc}</p>`;
+        card.addEventListener("click",()=>showPlaceDetails(p));
+        placesList.appendChild(card);
+      });
+      placesSection.style.display="block";
+      placesSection.scrollIntoView({behavior:"smooth"});
+    }
+
+    // Show Place Details
+    function showPlaceDetails(place){
+      const detail=document.getElementById("placeDetails");
+      document.getElementById("detailTitle").textContent=place.name;
+      document.getElementById("detailImg").src=place.img;
+      document.getElementById("detailImg").alt=place.name;
+      document.getElementById("detailDesc").textContent=place.desc;
+      detail.style.display="block";
+      detail.scrollIntoView({behavior:"smooth"});
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,384 @@
+/* --- Global Styles & Reset --- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background: #0f0f0f;
+    color: #fff;
+}
+
+/* --- Navigation Bar --- */
+nav {
+    width: 100%;
+    height: 70px;
+    background: #1a1a1a;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 50px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: 2px;
+}
+
+.nav-links {
+    display: flex;
+    list-style: none;
+    gap: 30px;
+}
+
+.nav-links li a {
+    text-decoration: none;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 500;
+    transition: 0.3s ease;
+    position: relative;
+}
+
+.nav-links li a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -6px;
+    width: 0%;
+    height: 2px;
+    background: #00c6ff;
+    transition: 0.3s ease;
+}
+
+.nav-links li a:hover::after {
+    width: 100%;
+}
+
+/* --- Hamburger Menu --- */
+.hamburger {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+    gap: 6px;
+}
+
+.hamburger span {
+    width: 28px;
+    height: 3px;
+    background: #fff;
+    border-radius: 3px;
+    transition: 0.3s ease;
+}
+
+/* --- Page Sections & Cards --- */
+h2 {
+    text-align: center;
+    margin: 20px 0 30px;
+    color: #00deab;
+    font-size: 2rem;
+}
+
+.services-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    max-width: 1200px;
+    margin: 80px auto 20px; /* Add margin to account for the fixed navbar */
+    padding: 0 20px;
+}
+
+/* Style for the single row of cards */
+.service-row {
+    display: flex;
+    flex-wrap: wrap; /* Allows cards to wrap on smaller screens */
+    justify-content: center;
+    gap: 2px; /* Spacing between cards */
+}
+
+/* Individual service card */
+.service-card {
+    background: #1f2935;
+    border-radius: 12px;
+    padding: 18px;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+    cursor: pointer;
+    transition: transform 0.2s, background 0.2s;
+    flex: 1 1 250px; /* Allows cards to grow and shrink, with a base width of 250px */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.service-card:hover {
+    background: #253649;
+    transform: translateY(-4px);
+}
+
+.service-card img {
+    width: 100%;
+    max-width: 220px;
+    height: 140px;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-bottom: 12px;
+}
+
+.service-card h3 {
+    color: #00deab;
+    font-size: 19px;
+    margin: 9px 0 4px;
+}
+
+.service-card p {
+    font-size: 14px;
+    margin: 7px 0 0;
+}
+
+/* --- Buttons --- */
+.btn {
+    padding: 8px 15px;
+    border: none;
+    border-radius: 16px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+    margin-top: 8px;
+    color: #fff;
+    transition: all 0.2s;
+}
+
+.btn:hover {
+    opacity: 0.9;
+    transform: scale(1.05);
+}
+
+.calc-btn {
+    background: #fea800;
+}
+
+.calc-btn:hover {
+    background: #d79400;
+}
+
+.book-btn {
+    background: #2ecc40;
+    display: none;
+}
+
+.book-btn:hover {
+    background: #22973b;
+}
+
+.tickets-btn {
+    background: #1566b5;
+    display: none;
+}
+
+.tickets-btn:hover {
+    background: #104b80;
+}
+
+.delete-btn {
+    background: #e74c3c;
+    color: #fff;
+    padding: 8px 15px;
+    border: none;
+    border-radius: 8px;
+    margin-top: 10px;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.2s;
+}
+
+.delete-btn:hover {
+    background: #b32e1c;
+    transform: scale(1.05);
+}
+
+/* --- Input Fields & Forms --- */
+.cost-text {
+    margin-top: 10px;
+    font-weight: bold;
+    color: #fff7b2;
+}
+
+.distance-label {
+    font-size: 14px;
+    color: #ffe066;
+    margin: 7px 0 2px;
+    width: 100%;
+    text-align: left;
+}
+
+.distance-input {
+    width: 95%;
+    padding: 10px;
+    margin-bottom: 12px;
+    border-radius: 8px;
+    border: 1.5px solid #00deab;
+    font-size: 14px;
+    outline: none;
+    background: #1a2535;
+    color: #fff;
+    transition: border-color 0.2s, background 0.2s;
+}
+
+.distance-input:focus {
+    border-color: #fea800;
+    background: #1f2e45;
+}
+
+.details-section {
+    display: none;
+    background: #172030;
+    padding: 32px 8px 16px;
+    margin-top: 10px;
+    border-radius: 10px;
+}
+
+.form-card,
+.ticket-card {
+    background: linear-gradient(145deg, #1f2e45, #22304a);
+    border-radius: 15px;
+    padding: 25px 20px;
+    margin: 20px auto 0;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+    text-align: center;
+    display: none;
+    max-width: 400px;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.form-card:hover,
+.ticket-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.6);
+}
+
+.form-card h3,
+.ticket-card h3 {
+    color: #00deab;
+    margin-bottom: 15px;
+    font-size: 1.4rem;
+}
+
+.form-card input {
+    width: 90%;
+    padding: 12px;
+    margin: 8px 0;
+    border-radius: 10px;
+    border: 1.5px solid #00c6ff;
+    font-size: 14px;
+    outline: none;
+    background: #1a2535;
+    color: #fff;
+    transition: border-color 0.2s, background 0.2s;
+}
+
+.form-card input:focus {
+    border-color: #fea800;
+    background: #1f2e45;
+}
+
+.form-card button {
+    width: 100%;
+    margin-top: 15px;
+    padding: 12px;
+    border-radius: 12px;
+    font-weight: bold;
+    background: #2ecc40;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.form-card button:hover {
+    background: #22973b;
+    transform: scale(1.05);
+}
+
+/* --- Responsive Design --- */
+@media (max-width: 1100px) {
+    .service-card {
+        flex: 1 1 45%; /* On medium screens, show two cards per row */
+    }
+}
+
+@media (max-width: 768px) {
+    .nav-links {
+        position: absolute;
+        top: 70px;
+        right: -100%;
+        flex-direction: column;
+        background: #1a1a1a;
+        width: 200px;
+        height: 100vh;
+        padding-top: 50px;
+        transition: 0.4s ease;
+    }
+
+    .nav-links.active {
+        right: 0;
+    }
+
+    .hamburger {
+        display: flex;
+    }
+}
+
+@media (max-width: 600px) {
+    nav {
+        flex-direction: column;
+        align-items: flex-start;
+        height: auto;
+        padding-bottom: 10px;
+    }
+
+    .logo {
+        margin: 9px 0;
+    }
+
+    .nav-links {
+        flex-direction: column;
+        gap: 8px;
+        background: #202020;
+        width: 100%;
+        padding: 7px 0;
+        position: static;
+    }
+
+    .nav-links.active {
+        display: flex;
+    }
+
+    .hamburger {
+        display: flex;
+        margin-left: auto;
+        margin-top: 10px;
+    }
+
+    .service-row {
+        flex-direction: column; /* Stack cards vertically on small screens */
+        align-items: center;
+    }
+
+    .service-card {
+        flex: 1 1 100%;
+        max-width: 400px; /* Limit max width for better appearance on very narrow screens */
+    }
+
+    .service-card img {
+        height: 110px;
+    }
+}

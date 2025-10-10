@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin Dashboard</title>
+  <style>
+    /* --- Reset & Global --- */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Arial, sans-serif;
+    }
+    body {
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      background: linear-gradient(135deg, #4b6cb7, #182848);
+      padding: 40px;
+      color: #fff;
+    }
+
+    /* --- Glass Card --- */
+    .dashboard-container {
+      width: 90%;
+      max-width: 1000px;
+      background: rgba(255, 255, 255, 0.12);
+      backdrop-filter: blur(15px) saturate(180%);
+      -webkit-backdrop-filter: blur(15px) saturate(180%);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      border-radius: 20px;
+      padding: 30px 40px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.25);
+      animation: fadeIn 0.5s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from {opacity:0; transform: translateY(-20px);}
+      to {opacity:1; transform: translateY(0);}
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 30px;
+      font-size: 32px;
+      text-shadow: 0 2px 6px rgba(0,0,0,0.3);
+    }
+
+    /* --- Logout Button --- */
+    .logout-btn {
+      position: absolute;
+      top: 30px;
+      right: 30px;
+      padding: 10px 18px;
+      border-radius: 12px;
+      border: 1px solid rgba(255,0,0,0.7);
+      background: rgba(255,0,0,0.6);
+      color: #fff;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    .logout-btn:hover {
+      background: rgba(255,0,0,0.8);
+    }
+
+    /* --- Dashboard Sections --- */
+    .sections {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+    }
+
+    .section-card {
+      flex: 1 1 250px;
+      min-width: 220px;
+      background: rgba(255, 255, 255, 0.18);
+      border-radius: 16px;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      padding: 20px;
+      text-align: center;
+      transition: 0.3s;
+      cursor: pointer;
+    }
+
+    .section-card:hover {
+      background: rgba(255, 255, 255, 0.25);
+      transform: translateY(-5px);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+    }
+
+    .section-card h2 {
+      margin-bottom: 10px;
+      font-size: 22px;
+    }
+
+    .section-card p {
+      font-size: 14px;
+      color: #eee;
+    }
+  </style>
+</head>
+<body>
+
+  <button class="logout-btn" onclick="logout()">Logout</button>
+
+  <div class="dashboard-container">
+    <h1>Welcome, Admin!</h1>
+
+    <div class="sections">
+      <div class="section-card">
+        <h2>Users</h2>
+        <p>Manage user accounts, roles, and permissions.</p>
+      </div>
+
+      <div class="section-card">
+        <h2>Reports</h2>
+        <p>View system reports, statistics, and analytics.</p>
+      </div>
+
+      <div class="section-card">
+        <h2>Settings</h2>
+        <p>Update site settings, preferences, and configurations.</p>
+      </div>
+
+      <div class="section-card">
+        <h2>Logs</h2>
+        <p>Check admin and system activity logs.</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function logout() {
+      // Clear admin session (if using localStorage)
+      localStorage.removeItem("adminUser");
+      window.location.href = "login_admin.html"; // redirect to login page
+    }
+  </script>
+
+</body>
+</html>

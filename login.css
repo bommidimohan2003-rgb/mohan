@@ -1,0 +1,185 @@
+/* Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Segoe UI", Arial, sans-serif;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: url("login.jpg") no-repeat center center/cover;
+}
+
+/* Main container with glassmorphism */
+.container {
+  width: 480px;
+  padding: 35px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.15); /* Transparent white */
+  backdrop-filter: blur(15px) saturate(180%); /* Glass effect */
+  -webkit-backdrop-filter: blur(15px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Tabs */
+.tabs {
+  display: flex;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+
+.tabs button {
+  flex: 1;
+  padding: 12px;
+  background: #f9f9f9;
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.tabs button.active {
+  background: #2193b0;
+  color: #fff;
+}
+
+/* Forms */
+form {
+  display: none;
+  flex-direction: column;
+  gap: 15px;
+}
+
+form.active {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+/* Input rows (side by side fields) */
+.input-row {
+  display: flex;
+  gap: 12px;
+}
+
+.input-row .input-group {
+  flex: 1;
+  position: relative;
+}
+
+/* Labels */
+label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #444;
+}
+
+/* Input styles */
+input {
+  width: 100%;
+  padding: 10px 40px 10px 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 14px;
+  transition: 0.3s;
+}
+
+input:focus {
+  border-color: #2193b0;
+  outline: none;
+  box-shadow: 0 0 5px rgba(33, 147, 176, 0.3);
+}
+
+/* Password toggle */
+.toggle-password {
+  position: absolute;
+  top: 50%;
+  right: 12px;
+  transform: translateY(-50%);
+  font-size: 16px;
+  cursor: pointer;
+  color: #777;
+}
+
+/* Buttons */
+.btn {
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.btn-primary {
+  background: #2193b0;
+  color: #fff;
+}
+
+.btn-primary:hover {
+  background: #17627a;
+}
+
+.btn-secondary {
+  background: #f1f1f1;
+  color: #333;
+}
+
+.btn-secondary:hover {
+  background: #ddd;
+}
+
+/* Links */
+.link {
+  text-align: right;
+  font-size: 13px;
+  color: #2193b0;
+  cursor: pointer;
+}
+
+/* Popups */
+.popup {
+  position: fixed;
+  top: 20px;
+  right: -400px;
+  padding: 12px 18px;
+  border-radius: 8px;
+  color: #fff;
+  font-size: 14px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  transition: all 0.4s ease;
+}
+
+.popup.show {
+  right: 20px;
+}
+
+.popup.success {
+  background: #27ae60;
+}
+
+.popup.error {
+  background: #e74c3c;
+}

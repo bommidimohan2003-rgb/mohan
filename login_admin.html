@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Auth System</title>
+  <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+  <div class="container">
+    <div class="tabs">
+      <button class="tab-btn active" onclick="showForm(event, 'login')">Login</button>
+      <button class="tab-btn" onclick="showForm(event, 'register')">Register</button>
+      <button class="tab-btn" onclick="showForm(event, 'admin')">Admin</button>
+    </div>
+
+    <!-- Login Form -->
+    <form id="login" class="active" onsubmit="handleLogin(event)">
+      <label for="loginEmail">Email</label>
+      <input type="email" id="loginEmail" required placeholder="Enter email" />
+
+      <label for="loginPassword">Password</label>
+      <div class="input-group">
+        <input type="password" id="loginPassword" required placeholder="Enter password" />
+        <span class="toggle-password" onclick="togglePassword('loginPassword')">👁️</span>
+      </div>
+
+      <div class="link" onclick="showForm({}, 'forgot')">Forgot Password?</div>
+      <button type="submit" class="btn btn-primary">Login</button>
+    </form>
+
+    <!-- Register Form -->
+    <form id="register" onsubmit="handleRegister(event)">
+      <label for="regName">Full Name</label>
+      <input type="text" id="regName" required placeholder="Enter full name" />
+
+      <label for="regEmail">Email</label>
+      <input type="email" id="regEmail" required placeholder="Enter email" />
+
+      <label for="regPhone">Phone</label>
+      <input type="tel" id="regPhone" required pattern="[0-9]{10}" placeholder="10-digit number" />
+
+      <label for="regPassword">Password</label>
+      <div class="input-group">
+        <input type="password" id="regPassword" required placeholder="Enter password" />
+        <span class="toggle-password" onclick="togglePassword('regPassword')">👁️</span>
+      </div>
+
+      <label for="regConfirm">Confirm Password</label>
+      <div class="input-group">
+        <input type="password" id="regConfirm" required placeholder="Confirm password" />
+        <span class="toggle-password" onclick="togglePassword('regConfirm')">👁️</span>
+      </div>
+
+      <label for="regOtp">OTP</label>
+      <div class="input-row">
+        <div class="input-group">
+          <input type="text" id="regOtp" required placeholder="Enter OTP" />
+        </div>
+        <button type="button" class="btn btn-secondary" onclick="generateOtp()">Get OTP</button>
+      </div>
+
+      <button type="submit" class="btn btn-primary">Register</button>
+    </form>
+
+    <!-- Admin Login Form -->
+    <form id="admin" onsubmit="handleAdminLogin(event)">
+      <label for="adminUser">Username</label>
+      <input type="text" id="adminUser" required placeholder="Enter admin username" />
+
+      <label for="adminPass">Password</label>
+      <div class="input-group">
+        <input type="password" id="adminPass" required placeholder="Enter admin password" />
+        <span class="toggle-password" onclick="togglePassword('adminPass')">👁️</span>
+      </div>
+
+      <button type="submit" class="btn btn-primary">Admin Login</button>
+    </form>
+
+    <!-- Forgot Form -->
+    <form id="forgot" onsubmit="handleForgot(event)">
+      <label for="forgotEmail">Email</label>
+      <input type="email" id="forgotEmail" required placeholder="Registered email" />
+
+      <label for="forgotPhone">Phone</label>
+      <input type="tel" id="forgotPhone" required pattern="[0-9]{10}" placeholder="Registered phone" />
+
+      <label for="newPassword">New Password</label>
+      <div class="input-group">
+        <input type="password" id="newPassword" required placeholder="Enter new password" />
+        <span class="toggle-password" onclick="togglePassword('newPassword')">👁️</span>
+      </div>
+
+      <button type="submit" class="btn btn-primary">Reset Password</button>
+    </form>
+  </div>
+
+  <div id="popup" class="popup"></div>
+
+  <script>
+    const API_URL = "http://localhost:5000/api";
+    const tabBtns = document.querySelectorAll(".tab-btn");
+    const popup = document.getElementById("popup");
+
+    const loginForm = document.getElementById("login");
+    const registerForm = document.getElementById("register");
+    const forgotForm = document.getElementById("forgot");
+    const adminForm = document.getElementById("admin");
+
+    let currentOtp = null;
+
+    function showForm(e, formId) {
+      if (e && e.target) tabBtns.forEach(btn => btn.classList.remove("active"));
+      if (e && e.target) e.target.classList.add("active");
+
+      [loginForm, registerForm, forgotForm, adminForm].forEach(f => f.classList.remove("active"));
+      document.getElementById(formId).classList.add("active");
+
+      if (formId === "forgot") tabBtns.forEach(btn => btn.classList.remove("active"));
+    }
+
+    function showPopup(message, type = "success") {
+      popup.textContent = message;
+      popup.className = "popup " + type + " show";
+      setTimeout(() => popup.classList.remove("show"), 2500);
+    }
+
+    function togglePassword(id) {
+      const input = document.getElementById(id);
+      const icon = input.nextElementSibling;
+      if (input.type === "password") { input.type = "text"; icon.textContent = "🙈"; }
+      else { input.type = "password"; icon.textContent = "👁️"; }
+    }
+
+    function generateOtp() {
+      const phone = document.getElementById("regPhone").value.trim();
+      if (!phone) return showPopup("Enter phone number first!", "error");
+      currentOtp = Math.floor(100000 + Math.random() * 900000);
+      showPopup("OTP sent (simulated): " + currentOtp, "success");
+    }
+
+    async function handleRegister(e) {
+      e.preventDefault();
+      const name = document.getElementById("regName").value.trim();
+      const email = document.getElementById("regEmail").value.trim().toLowerCase();
+      const phone = document.getElementById("regPhone").value.trim();
+      const password = document.getElementById("regPassword").value;
+      const confirm = document.getElementById("regConfirm").value;
+      const otpEntered = document.getElementById("regOtp").value.trim();
+
+      if (password.length < 6) return showPopup("Password must be at least 6 characters", "error");
+      if (password !== confirm) return showPopup("Passwords do not match!", "error");
+      if (otpEntered != currentOtp) return showPopup("Invalid OTP!", "error");
+
+      try {
+        const res = await fetch(`${API_URL}/register`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ name, email, phone, password })
+        });
+        const data = await res.json();
+        if (!res.ok) return showPopup(data.message, "error");
+
+        showPopup(data.message, "success");
+        registerForm.reset();
+        currentOtp = null;
+        showForm({ target: tabBtns[0] }, "login");
+      } catch {
+        showPopup("Server error!", "error");
+      }
+    }
+
+    async function handleLogin(e) {
+      e.preventDefault();
+      const email = document.getElementById("loginEmail").value.trim().toLowerCase();
+      const password = document.getElementById("loginPassword").value;
+
+      try {
+        const res = await fetch(`${API_URL}/login`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email, password })
+        });
+        const data = await res.json();
+        if (!res.ok) return showPopup(data.message, "error");
+
+        localStorage.setItem("currentUser", JSON.stringify(data.user));
+        showPopup(data.message, "success");
+        setTimeout(() => window.location.href = "home.html", 1200);
+      } catch {
+        showPopup("Server error!", "error");
+      }
+    }
+
+    async function handleAdminLogin(e) {
+      e.preventDefault();
+      const username = document.getElementById("adminUser").value.trim();
+      const password = document.getElementById("adminPass").value;
+
+      try {
+        const res = await fetch(`${API_URL}/admin/login`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ username, password })
+        });
+        const data = await res.json();
+        if (!res.ok) return showPopup(data.message, "error");
+
+        localStorage.setItem("adminUser", JSON.stringify(data.user));
+        showPopup(data.message, "success");
+        setTimeout(() => window.location.href = "admin_dashboard.html", 1200);
+      } catch {
+        showPopup("Server error!", "error");
+      }
+    }
+
+    async function handleForgot(e) {
+      e.preventDefault();
+      const email = document.getElementById("forgotEmail").value.trim().toLowerCase();
+      const phone = document.getElementById("forgotPhone").value.trim();
+      const newPasswordVal = document.getElementById("newPassword").value;
+
+      try {
+        const res = await fetch(`${API_URL}/forgot`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email, phone, newPassword: newPasswordVal })
+        });
+        const data = await res.json();
+        if (!res.ok) return showPopup(data.message, "error");
+
+        showPopup(data.message, "success");
+        forgotForm.reset();
+        showForm({ target: tabBtns[0] }, "login");
+      } catch {
+        showPopup("Server error!", "error");
+      }
+    }
+  </script>
+</body>
+</html>

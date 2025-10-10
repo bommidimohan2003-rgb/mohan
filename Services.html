@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Travel Services</title>
+ <link rel="stylesheet" href="service.css">
+</head><body>
+  <!-- Navbar -->
+  <nav>
+    <div class="logo">Travel</div>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="Home.html">Home</a></li>
+      <li><a href="Services.html">Services</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li><a href="travel.html">Trip</a></li>
+    </ul>
+    <div class="hamburger" onclick="toggleMenu()">
+      <span></span><span></span><span></span>
+    </div>
+  </nav>
+
+  <!-- Services Section -->
+  <section id="services">
+    <h2>Our Services</h2>
+    <div class="services-container">
+      <div class="service-card" data-target="flight-types">
+        <img src="flight1.jpg" alt="Flight Booking">
+        <h3>✈️ Flight Booking</h3>
+        <p>Book economy, business & first-class flights with ease.</p>
+        <p id="flight-counter">🎟️ Tickets Booked: 0</p>
+        <button class="btn tickets-btn" id="show-tickets-flight">View Tickets</button>
+      </div>
+      <div class="service-card" data-target="bike-types">
+        <img src="bike.jpg" alt="Bike Rentals">
+        <h3>🏍️ Bike Rentals</h3>
+        <p>Standard & battery-powered bikes available.</p>
+        <p id="bike-counter">💡 Hours Booked: 0</p>
+        <button class="btn tickets-btn" id="show-tickets-bike">View Rentals</button>
+      </div>
+      <div class="service-card" data-target="car-types">
+        <img src="rentcar.jpg" alt="Car Rentals">
+        <h3>🚗 Car Rentals</h3>
+        <p>Various options for all your travel needs.</p>
+        <p id="car-counter">⏰ Hours Booked: 0</p>
+        <button class="btn tickets-btn" id="show-tickets-car">View Rentals</button>
+      </div>
+      <div class="service-card" data-target="bicycle-types">
+        <img src="mountainbike.jpg" alt="Bicycle Rentals">
+        <h3>🚲 Bicycle Rentals</h3>
+        <p>Mountain & standard bicycles for fun rides.</p>
+        <p id="bicycle-counter">⏰ Hours Booked: 0</p>
+        <button class="btn tickets-btn" id="show-tickets-bicycle">View Rentals</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Flight Booking -->
+  <section id="flight-types" class="details-section">
+    <h2>Choose Your Flight</h2>
+    <div class="services-container">
+      <!-- Economy Class -->
+      <div class="service-card" data-class="Economy Class" data-rate="5000" data-service="flight">
+        <img src="economy.jpg" alt="Economy">
+        <h3>Economy Class</h3>
+        <label>Select Route:</label>
+        <select class="distance-input route-select">
+          <option value="Delhi → London">Delhi → London</option>
+          <option value="Mumbai → Dubai">Mumbai → Dubai</option>
+          <option value="Chennai → Singapore">Chennai → Singapore</option>
+        </select>
+        <label>Select Airline:</label>
+        <select class="distance-input airline-select">
+          <option value="Air India">Air India</option>
+          <option value="IndiGo">IndiGo</option>
+          <option value="SpiceJet">SpiceJet</option>
+        </select>
+        <label>Enter Tickets:</label>
+        <input type="number" placeholder="e.g. 2" class="distance-input">
+        <button class="btn calc-btn">Calculate Cost</button>
+        <p class="cost-text">Cost will appear here</p>
+        <button class="btn book-btn">Confirm Booking</button>
+      </div>
+
+      <!-- Business Class -->
+      <div class="service-card" data-class="Business Class" data-rate="12000" data-service="flight">
+        <img src="business.jpg" alt="Business">
+        <h3>Business Class</h3>
+        <label>Select Route:</label>
+        <select class="distance-input route-select">
+          <option value="Delhi → London">Delhi → London</option>
+          <option value="Mumbai → Dubai">Mumbai → Dubai</option>
+          <option value="Chennai → Singapore">Chennai → Singapore</option>
+        </select>
+        <label>Select Airline:</label>
+        <select class="distance-input airline-select">
+          <option value="Air India">Air India</option>
+          <option value="IndiGo">IndiGo</option>
+          <option value="SpiceJet">SpiceJet</option>
+        </select>
+        <label>Enter Tickets:</label>
+        <input type="number" placeholder="e.g. 1" class="distance-input">
+        <button class="btn calc-btn">Calculate Cost</button>
+        <p class="cost-text">Cost will appear here</p>
+        <button class="btn book-btn">Confirm Booking</button>
+      </div>
+
+      <!-- First Class -->
+      <div class="service-card" data-class="First Class" data-rate="25000" data-service="flight">
+        <img src="first.jpg" alt="First">
+        <h3>First Class</h3>
+        <label>Select Route:</label>
+        <select class="distance-input route-select">
+          <option value="Delhi → London">Delhi → London</option>
+          <option value="Mumbai → Dubai">Mumbai → Dubai</option>
+          <option value="Chennai → Singapore">Chennai → Singapore</option>
+        </select>
+        <label>Select Airline:</label>
+        <select class="distance-input airline-select">
+          <option value="Air India">Air India</option>
+          <option value="IndiGo">IndiGo</option>
+          <option value="SpiceJet">SpiceJet</option>
+        </select>
+        <label>Enter Tickets:</label>
+        <input type="number" placeholder="e.g. 1" class="distance-input">
+        <button class="btn calc-btn">Calculate Cost</button>
+        <p class="cost-text">Cost will appear here</p>
+        <button class="btn book-btn">Confirm Booking</button>
+      </div>
+    </div>
+
+    <!-- Flight Forms -->
+    <div class="form-card" id="user-form-flight">
+      <h3>Enter Passenger Details</h3>
+      <div id="flight-passenger-fields"></div>
+      <button onclick="submitDetails('flight')">Submit Passenger Details</button>
+    </div>
+
+    <!-- Flight Tickets -->
+    <div class="ticket-card" id="ticket-summary-flight">
+      <h3>🎫 Ticket Summary</h3>
+      <div id="tickets-list-flight"></div>
+    </div>
+  </section>
+
+  <!-- Bike Rentals -->
+  <section id="bike-types" class="details-section">
+    <h2>Rent a Bike</h2>
+    <div class="services-container">
+      <div class="service-card" data-class="Standard Bike" data-rate="80" data-service="bike">
+        <img src="bike.jpg" alt="Standard Bike">
+        <h3>Standard Bike</h3>
+        <label>Enter Hours:</label>
+        <input type="number" placeholder="e.g. 2" class="distance-input">
+        <button class="btn calc-btn">Calculate Cost</button>
+        <p class="cost-text">Cost will appear here</p>
+        <button class="btn book-btn">Confirm Rental</button>
+      </div>
+      <div class="service-card" data-class="Battery Bike" data-rate="120" data-service="bike">
+        <img src="battery.jpg" alt="Battery Bike">
+        <h3>Battery Bike</h3>
+        <label>Enter Hours:</label>
+        <input type="number" placeholder="e.g. 1" class="distance-input">
+        <button class="btn calc-btn">Calculate Cost</button>
+        <p class="cost-text">Cost will appear here</p>
+        <button class="btn book-btn">Confirm Rental</button>
+      </div>
+    </div>
+
+    <!-- Bike Form -->
+    <div class="form-card" id="user-form-bike">
+      <h3>Enter Renter Details</h3>
+      <input type="text" placeholder="Full Name" id="user-name-bike">
+      <input type="email" placeholder="Email Address" id="user-email-bike">
+      <input type="tel" placeholder="Phone Number" id="user-phone-bike">
+      <button onclick="submitDetails('bike')">Submit</button>
+    </div>
+
+    <!-- Bike Tickets -->
+    <div class="ticket-card" id="ticket-summary-bike">
+      <h3>🏍️ Rental Summary</h3>
+      <div id="tickets-list-bike"></div>
+    </div>
+  </section>
+
+  <!-- Car Rentals -->
+  <section id="car-types" class="details-section">
+    <h2>Rent a Car</h2>
+    <div class="services-container">
+      <div class="service-card" data-class="Sedan" data-rate="100" data-service="car">
+        <img src="sedan.jpg" alt="Sedan">
+        <h3>Sedan</h3>
+        <label>Enter Hours:</label>
+        <input type="number" placeholder="e.g. 3" class="distance-input">
+        <button class="btn calc-btn">Calculate Cost</button>
+        <p class="cost-text">Cost will appear here</p>
+        <button class="btn book-btn">Confirm Rental</button>
+      </div>
+      <div class="service-card" data-class="SUV" data-rate="150" data-service="car">
+        <img src="suv.jpg" alt="SUV">
+        <h3>SUV</h3>
+        <label>Enter Hours:</label>
+        <input type="number" placeholder="e.g. 2" class="distance-input">
+        <button class="btn calc-btn">Calculate Cost</button>
+        <p class="cost-text">Cost will appear here</p>
+        <button class="btn book-btn">Confirm Rental</button>
+      </div>
+    </div>
+
+    <!-- Car Form -->
+    <div class="form-card" id="user-form-car">
+      <h3>Enter Renter Details</h3>
+      <input type="text" placeholder="Full Name" id="user-name-car">
+      <input type="email" placeholder="Email Address" id="user-email-car">
+      <input type="tel" placeholder="Phone Number" id="user-phone-car">
+      <button onclick="submitDetails('car')">Submit</button>
+    </div>
+
+    <!-- Car Tickets -->
+    <div class="ticket-card" id="ticket-summary-car">
+      <h3>🚗 Rental Summary</h3>
+      <div id="tickets-list-car"></div>
+    </div>
+  </section>
+
+  <!-- Bicycle Rentals -->
+  <section id="bicycle-types" class="details-section">
+    <h2>Rent a Bicycle</h2>
+    <div class="services-container">
+      <div class="service-card" data-class="Standard Bicycle" data-rate="20" data-service="bicycle">
+        <img src="citycycle.jpg" alt="Standard Bicycle">
+        <h3>Standard Bicycle</h3>
+        <label>Enter Hours:</label>
+        <input type="number" placeholder="e.g. 2" class="distance-input">
+        <button class="btn calc-btn">Calculate Cost</button>
+        <p class="cost-text">Cost will appear here</p>
+        <button class="btn book-btn">Confirm Rental</button>
+      </div>
+      <div class="service-card" data-class="Mountain Bicycle" data-rate="40" data-service="bicycle">
+        <img src="mountainbike.jpg" alt="Mountain Bicycle">
+        <h3>Mountain Bicycle</h3>
+        <label>Enter Hours:</label>
+        <input type="number" placeholder="e.g. 1" class="distance-input">
+        <button class="btn calc-btn">Calculate Cost</button>
+        <p class="cost-text">Cost will appear here</p>
+        <button class="btn book-btn">Confirm Rental</button>
+      </div>
+    </div>
+
+    <!-- Bicycle Form -->
+    <div class="form-card" id="user-form-bicycle">
+      <h3>Enter Renter Details</h3>
+      <input type="text" placeholder="Full Name" id="user-name-bicycle">
+      <input type="email" placeholder="Email Address" id="user-email-bicycle">
+      <input type="tel" placeholder="Phone Number" id="user-phone-bicycle">
+      <button onclick="submitDetails('bicycle')">Submit</button>
+    </div>
+
+    <!-- Bicycle Tickets -->
+    <div class="ticket-card" id="ticket-summary-bicycle">
+      <h3>🚲 Rental Summary</h3>
+      <div id="tickets-list-bicycle"></div>
+    </div>
+  </section>
+<script>
+let lastTicketObj = { flight: {}, bike: {}, car: {}, bicycle: {} };
+let allTickets = { flight: [], bike: [], car: [], bicycle: [] };
+
+function toggleMenu() {
+    document.getElementById('navLinks').classList.toggle('active');
+}
+
+// Function to fetch all tickets from the backend and update the UI
+async function fetchTickets() {
+    try {
+        const response = await fetch('http://localhost:5000/api/tickets');
+        if (!response.ok) throw new Error('Network response was not ok');
+        const data = await response.json();
+        
+        // Clear existing data
+        allTickets = { flight: [], bike: [], car: [], bicycle: [] };
+        
+        // Distribute fetched tickets into the correct arrays
+        data.forEach(ticket => {
+            if (allTickets[ticket.service]) {
+                allTickets[ticket.service].push(ticket);
+            }
+        });
+
+        updateCounters();
+    } catch (error) {
+        console.error("Failed to fetch tickets:", error);
+    }
+}
+
+function updateCounters() {
+    document.getElementById('flight-counter').textContent = `🎟️ Tickets Booked: ${allTickets.flight.reduce((s, t) => s + t.units, 0)}`;
+    document.getElementById('bike-counter').textContent = `💡 Hours Booked: ${allTickets.bike.reduce((s, t) => s + t.units, 0)}`;
+    document.getElementById('car-counter').textContent = `⏰ Hours Booked: ${allTickets.car.reduce((s, t) => s + t.units, 0)}`;
+    document.getElementById('bicycle-counter').textContent = `⏰ Hours Booked: ${allTickets.bicycle.reduce((s, t) => s + t.units, 0)}`;
+    
+    // Check if tickets exist before showing the button
+    document.getElementById('show-tickets-flight').style.display = allTickets.flight.length > 0 ? "inline-block" : "none";
+    document.getElementById('show-tickets-bike').style.display = allTickets.bike.length > 0 ? "inline-block" : "none";
+    document.getElementById('show-tickets-car').style.display = allTickets.car.length > 0 ? "inline-block" : "none";
+    document.getElementById('show-tickets-bicycle').style.display = allTickets.bicycle.length > 0 ? "inline-block" : "none";
+}
+
+fetchTickets();
+
+document.querySelectorAll('#services .service-card').forEach(card => {
+    card.addEventListener('click', () => {
+        const target = card.dataset.target;
+        if (target) {
+            document.querySelectorAll('.details-section').forEach(sec => sec.style.display = "none");
+            document.getElementById(target).style.display = "block";
+            document.getElementById(target).scrollIntoView({ behavior: "smooth" });
+        }
+    });
+});
+
+document.querySelectorAll('.details-section .service-card').forEach(card => {
+    const serviceType = card.dataset.service;
+    const rate = parseFloat(card.dataset.rate || 0);
+    const calcBtn = card.querySelector('.calc-btn');
+    const bookBtn = card.querySelector('.book-btn');
+    const costText = card.querySelector('.cost-text');
+    const input = card.querySelector('input');
+    const selectAirline = card.querySelector('select.airline-select');
+    const selectRoute = card.querySelector('select.route-select');
+    let formCard = document.getElementById(`user-form-${serviceType}`);
+    
+    // Hide book buttons initially
+    bookBtn.style.display = "none";
+
+    calcBtn.addEventListener('click', () => {
+        const value = parseInt(input.value);
+        if (!value || value <= 0) {
+            alert("Enter a valid number");
+            return;
+        }
+        const cost = value * rate;
+        costText.textContent = `💰 ₹${cost} for ${value} ${serviceType === "flight" ? "tickets" : "hours"} (${card.dataset.class})`;
+        
+        lastTicketObj[serviceType] = {
+            id: "TCKT" + Math.floor(100000 + Math.random() * 900000), // temp ID
+            units: value,
+            class: card.dataset.class,
+            cost: cost,
+            service: serviceType,
+            route: serviceType === "flight" ? selectRoute.value : undefined,
+            airline: serviceType === "flight" ? selectAirline.value : undefined,
+        };
+
+        // Display form
+        if (serviceType === "flight") {
+            const passengerFieldsContainer = document.getElementById('flight-passenger-fields');
+            passengerFieldsContainer.innerHTML = '';
+            for (let i = 1; i <= value; i++) {
+                passengerFieldsContainer.innerHTML += `
+                    <div style="border:1px solid #00deab;padding:8px;margin:8px 0;border-radius:8px">
+                        <p><b>Passenger ${i}</b></p>
+                        <input type="text" id="user-name-${serviceType}-${i}" placeholder="Name" required><br>
+                        <input type="email" id="user-email-${serviceType}-${i}" placeholder="Email" required><br>
+                        <input type="tel" id="user-phone-${serviceType}-${i}" placeholder="Phone" required><br>
+                    </div>`;
+            }
+            formCard.style.display = "block";
+        } else {
+            formCard.style.display = "block";
+            document.getElementById(`user-name-${serviceType}`).value = '';
+            document.getElementById(`user-email-${serviceType}`).value = '';
+            document.getElementById(`user-phone-${serviceType}`).value = '';
+        }
+        formCard.scrollIntoView({ behavior: "smooth" });
+        bookBtn.style.display = "none";
+    });
+
+    bookBtn.addEventListener('click', async () => {
+        const ticketData = lastTicketObj[serviceType];
+        if (!ticketData.cost) {
+            alert("Please calculate the cost first.");
+            return;
+        }
+        
+        try {
+            const response = await fetch('http://localhost:5000/api/tickets', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(ticketData)
+            });
+            
+            if (!response.ok) throw new Error('Failed to save ticket.');
+            
+            alert(`✅ Booking Confirmed!\nType: ${ticketData.class}\nTotal Cost: ₹${ticketData.cost}`);
+            bookBtn.style.display = "none";
+            await fetchTickets(); // Refresh data from the server
+        } catch (error) {
+            console.error("Error confirming booking:", error);
+            alert("❌ An error occurred during booking. Please try again.");
+        }
+    });
+});
+
+async function submitDetails(type) {
+    let detailsSubmitted = false;
+    if (type === "flight") {
+        const passengers = [];
+        for (let i = 1; i <= lastTicketObj[type].units; i++) {
+            let name = document.getElementById(`user-name-${type}-${i}`).value;
+            let email = document.getElementById(`user-email-${type}-${i}`).value;
+            let phone = document.getElementById(`user-phone-${type}-${i}`).value;
+            if (!name || !email || !phone) {
+                alert(`⚠️ Fill all fields for Passenger ${i}`);
+                return;
+            }
+            passengers.push({ name, email, phone });
+        }
+        lastTicketObj[type].passengers = passengers;
+        detailsSubmitted = true;
+    } else {
+        let name = document.getElementById(`user-name-${type}`).value;
+        let email = document.getElementById(`user-email-${type}`).value;
+        let phone = document.getElementById(`user-phone-${type}`).value;
+        if (!name || !email || !phone) {
+            alert("⚠️ Fill all fields.");
+            return;
+        }
+        lastTicketObj[type].name = name;
+        lastTicketObj[type].email = email;
+        lastTicketObj[type].phone = phone;
+        detailsSubmitted = true;
+    }
+
+    if (detailsSubmitted) {
+        alert("✅ Details Submitted!");
+        document.getElementById(`user-form-${type}`).style.display = "none";
+        const bookBtn = document.querySelector(`[data-service="${type}"] .book-btn`);
+        if (bookBtn) {
+            bookBtn.style.display = "inline-block";
+            bookBtn.scrollIntoView({ behavior: "smooth" });
+        }
+    }
+}
+
+function renderTickets(type) {
+    let ticketsList = document.getElementById(`tickets-list-${type}`);
+    ticketsList.innerHTML = "";
+    const ticketsToShow = allTickets[type];
+    if (ticketsToShow.length === 0) {
+        document.getElementById(`ticket-summary-${type}`).style.display = "none";
+        return;
+    }
+    
+    ticketsToShow.forEach((t, index) => {
+        ticketsList.innerHTML += `<div style="border:1px solid #00deab;border-radius:8px;padding:8px;margin:8px 0;text-align:left">
+            <p><b>#${index + 1}</b></p>
+            <p>🎫 Ticket ID: ${t.id}</p>
+            <p>Type: ${t.class}</p>
+            ${type === "flight" ? `<p>Route: ${t.route}</p><p>Airline: ${t.airline || 'N/A'}</p>` : ""}
+            ${type === "flight" && t.passengers ? t.passengers.map((p, i) => `<p>👤 Passenger ${i + 1}: ${p.name}, ${p.email}, ${p.phone}</p>`).join("") : `
+            <p>👤 Name: ${t.name || 'N/A'}</p>
+            <p>📧 Email: ${t.email || 'N/A'}</p>
+            <p>📞 Phone: ${t.phone || 'N/A'}</p>
+            `}
+            <p>${type === "flight" ? "🎟️ Tickets" : "⏰ Hours"}: ${t.units}</p>
+            <p>💰 Cost: ₹${t.cost}</p>
+        </div>`;
+    });
+    document.getElementById(`ticket-summary-${type}`).style.display = "block";
+}
+
+document.getElementById('show-tickets-flight').addEventListener('click', () => { fetchTickets().then(() => renderTickets('flight')); document.getElementById('ticket-summary-flight').scrollIntoView({ behavior: "smooth" }); });
+document.getElementById('show-tickets-bike').addEventListener('click', () => { fetchTickets().then(() => renderTickets('bike')); document.getElementById('ticket-summary-bike').scrollIntoView({ behavior: "smooth" }); });
+document.getElementById('show-tickets-car').addEventListener('click', () => { fetchTickets().then(() => renderTickets('car')); document.getElementById('ticket-summary-car').scrollIntoView({ behavior: "smooth" }); });
+document.getElementById('show-tickets-bicycle').addEventListener('click', () => { fetchTickets().then(() => renderTickets('bicycle')); document.getElementById('ticket-summary-bicycle').scrollIntoView({ behavior: "smooth" }); });
+</script>
+</body>
+</html>

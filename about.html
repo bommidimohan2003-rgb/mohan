@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About - Travel & Tourism</title>
+  <style>
+    /* ===== Reset ===== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      background: #0f0f0f;
+      color: #fff;
+      line-height: 1.6;
+    }
+
+    /* ===== Navbar ===== */
+    nav {
+      width: 100%;
+      height: 70px;
+      background: #1a1a1a;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 50px;
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 1000;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+    }
+
+    .logo {
+      font-size: 24px;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: 2px;
+    }
+
+    .nav-links {
+      display: flex;
+      list-style: none;
+      gap: 30px;
+    }
+
+    .nav-links li a {
+      text-decoration: none;
+      color: #fff;
+      font-size: 16px;
+      font-weight: 500;
+      position: relative;
+      padding-bottom: 4px;
+      transition: 0.3s ease;
+    }
+
+    .nav-links li a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 0%;
+      height: 2px;
+      background: #00c6ff;
+      transition: 0.3s ease;
+    }
+
+    .nav-links li a:hover::after,
+    .nav-links li a.active::after {
+      width: 100%;
+    }
+
+    /* Hamburger */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+      gap: 6px;
+    }
+
+    .hamburger span {
+      width: 28px;
+      height: 3px;
+      background: #fff;
+      border-radius: 3px;
+      transition: 0.3s ease;
+    }
+
+    @media (max-width: 768px) {
+      .nav-links {
+        position: absolute;
+        top: 70px;
+        right: -100%;
+        flex-direction: column;
+        background: #1a1a1a;
+        width: 200px;
+        height: 100vh;
+        padding-top: 50px;
+        transition: 0.4s ease;
+      }
+
+      .nav-links.active {
+        right: 0;
+      }
+
+      .hamburger {
+        display: flex;
+      }
+    }
+
+    /* ===== About Section ===== */
+    section#about {
+      padding: 120px 20px 80px;
+      max-width: 1100px;
+      margin: auto;
+    }
+
+    .about-container {
+      text-align: center;
+      padding: 20px;
+    }
+
+    h2 {
+      font-size: 34px;
+      margin-bottom: 20px;
+      color: #00deab;
+      font-weight: 600;
+    }
+
+    h3 {
+      margin-top: 30px;
+      font-size: 22px;
+      color: #00deab;
+    }
+
+    p {
+      font-size: 17px;
+      color: #ddd;
+      line-height: 1.8;
+      margin-bottom: 18px;
+    }
+
+    ul {
+      list-style: none;
+      margin-top: 25px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 15px;
+    }
+
+    ul li {
+      background: transparent;
+      padding: 10px 5px;
+      font-size: 16px;
+      color: #fff;
+      transition: 0.3s ease;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    ul li:hover {
+      color: #00c6ff;
+    }
+
+    .quote {
+      margin-top: 35px;
+      font-size: 17px;
+      font-style: italic;
+      color: #fff;
+      border-left: 3px solid #fea800;
+      padding-left: 10px;
+      display: inline-block;
+    }
+
+    .apk-info {
+      margin-top: 40px;
+      padding: 10px;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .apk-info h3 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #00deab;
+    }
+
+    .apk-info p {
+      font-size: 15px;
+      margin: 6px 0;
+      color: #eee;
+    }
+
+    .app-btn {
+      display: inline-block;
+      margin-top: 30px;
+      padding: 12px 28px;
+      font-size: 16px;
+      font-weight: 500;
+      color: #fff;
+      border-radius: 30px;
+      background: linear-gradient(135deg, #fea800, #ff6b6b);
+      text-decoration: none;
+      transition: 0.3s ease;
+    }
+
+    .app-btn:hover {
+      transform: scale(1.05);
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Navbar -->
+  <nav>
+    <div class="logo">Travel</div>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="Home.html">Home</a></li>
+      <li><a href="Services.html">Services</a></li>
+      <li><a href="about.html" class="active">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li><a href="travel.html">Trip</a></li>
+    </ul>
+    <div class="hamburger" onclick="toggleMenu()"><span></span><span></span><span></span></div>
+  </nav>
+
+  <!-- About Section -->
+  <section id="about">
+    <div class="about-container">
+      <h2>About Travel & Tourism</h2>
+      <p>
+        Our <strong>Travel & Tourism</strong> application is your one-stop solution for discovering the world.
+        We make travel easy, fun, and affordable by connecting you with breathtaking destinations,
+        comfortable accommodations, and exciting activities.
+      </p>
+
+      <h3>Our Mission</h3>
+      <p>To inspire people to travel more by providing seamless trip planning and unforgettable experiences.</p>
+
+      <h3>Our Vision</h3>
+      <p>To become the world’s most trusted travel companion, helping travelers create lifelong memories.</p>
+
+      <h3>What We Offer</h3>
+      <ul>
+        <li>🌍 Discover top destinations worldwide</li>
+        <li>✈️ Easy trip search and booking</li>
+        <li>🧳 Flights, bikes, cars, and transport options</li>
+        <li>📖 Travel guides and itineraries</li>
+        <li>🎉 Exclusive offers and seasonal discounts</li>
+        <li>🎟️ Provide ticket bookings and rent services</li>
+      </ul>
+
+      <p class="quote">“Travel is not just about places, it’s about creating stories and memories.”</p>
+
+      <div class="apk-info">
+        <h3>📱 Application Details</h3>
+        <p><strong>App Name:</strong> Travel & Tourism</p>
+        <p><strong>Version:</strong> 1.0.2</p>
+        <p><strong>Developer:</strong> Global Explore Pvt. Ltd.</p>
+        <p><strong>Platforms:</strong> Android 6.0+ | iOS 12+</p>
+        <p><strong>Last Updated:</strong> September 2025</p>
+        <p><strong>Support:</strong> support@travelexplore.com</p>
+      </div>
+
+      <a href="#" class="app-btn">Download APK</a>
+    </div>
+  </section>
+
+  <script>
+    function toggleMenu() {
+      document.getElementById('navLinks').classList.toggle('active');
+    }
+  </script>
+</body>
+
+</html>

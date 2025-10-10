@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Trip Tracker with Maps</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e1') no-repeat center center fixed;
+      background-color: #1d1a1a;
+      background-size: cover;
+      margin: 0;
+      padding: 0;
+      color: #e7dfdf;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+    nav {
+      width: 100%;
+      height: 70px;
+      background: rgba(0, 0, 0, 0.7);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 50px;
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 1000;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.6);
+      backdrop-filter: blur(6px);
+    }
+    .logo { font-size: 24px; font-weight: 700; color: #fff; }
+    .nav-links { display: flex; list-style: none; gap: 30px; }
+    .nav-links li a {
+      text-decoration: none; color: #fff; font-size: 16px;
+      font-weight: 500; transition: 0.3s ease; position: relative;
+    }
+    .nav-links li a::after {
+      content: ""; position: absolute; left: 0; bottom: -6px;
+      width: 0%; height: 2px; background: #00c6ff; transition: 0.3s ease;
+    }
+    .nav-links li a:hover::after { width: 100%; }
+    .hamburger { display: none; flex-direction: column; cursor: pointer; gap: 6px; }
+    .hamburger span {
+      width: 28px; height: 3px; background: #fff; border-radius: 3px;
+      transition: 0.3s ease;
+    }
+    @media (max-width: 768px) {
+      .nav-links {
+        position: absolute; top: 70px; right: -100%; flex-direction: column;
+        background: rgba(0, 0, 0, 0.95); width: 200px; height: 100vh;
+        padding-top: 50px; transition: 0.4s ease;
+      }
+      .nav-links.active { right: 0; }
+      .hamburger { display: flex; }
+    }
+    main { flex: 1; display: flex; flex-direction: column;
+      justify-content: center; align-items: center; padding: 100px 20px 40px 20px; }
+    h1 { text-align: center; font-size: 2.5rem;
+      text-shadow: 2px 2px 6px rgba(0,0,0,0.6); margin-bottom: 20px; }
+    #tripForm {
+      width: 100%; max-width: 380px; padding: 18px;
+      background: rgba(255, 255, 255, 0.15); border-radius: 18px;
+      box-shadow: 0 6px 25px rgba(0, 0, 0, 0.4); backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.25); margin-bottom: 30px;
+    }
+    #tripForm h2 { text-align: center; margin-bottom: 12px; color: #fff; }
+    #tripForm input, #tripForm textarea {
+      width: 100%; padding: 10px; margin: 8px 0; border: none;
+      border-radius: 8px; outline: none; background: rgba(255, 255, 255, 0.25);
+      color: #000; font-size: 14px;
+    }
+    #tripForm input:focus, #tripForm textarea:focus {
+      background: rgba(255, 255, 255, 0.4);
+      box-shadow: 0 0 8px rgba(0, 114, 255, 0.9);
+    }
+    #tripForm button {
+      width: 100%; padding: 12px;
+      background: linear-gradient(135deg, #0072ff, #00c6ff);
+      color: white; border: none; border-radius: 8px; font-size: 15px;
+      font-weight: 600; cursor: pointer;
+    }
+    #tripList { width: 100%; max-width: 650px; }
+    .trip {
+      background: rgba(255, 255, 255, 0.15); padding: 16px; margin-bottom: 12px;
+      border-radius: 15px; box-shadow: 0 5px 18px rgba(0,0,0,0.3);
+      backdrop-filter: blur(8px); color: #070606; position: relative;
+    }
+    .trip h3 { margin-top: 0; color: #00c6ff; font-size: 18px; }
+    .deleteBtn {
+      background-color: #dc3545; color: white; border: none;
+      padding: 6px 12px; border-radius: 6px; cursor: pointer; float: right;
+    }
+    .deleteBtn:hover { background-color: #b02a37; }
+    .mapBtn {
+      background-color: #0d6efd; color: white; border: none;
+      padding: 6px 12px; border-radius: 6px; cursor: pointer; float: right; margin-right: 8px;
+    }
+    .mapBtn:hover { background-color: #0b5ed7; }
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <nav>
+    <div class="logo">Travel</div>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="Home.html">Home</a></li>
+      <li><a href="Services.html">Services</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li><a href="#">Trip</a></li>
+    </ul>
+    <div class="hamburger" onclick="toggleMenu()">
+      <span></span><span></span><span></span>
+    </div>
+  </nav>
+
+  <main>
+    <h1>My Trip Tracker</h1>
+
+    <!-- Trip Form -->
+    <div id="tripForm">
+      <h2>Add New Trip</h2>
+      <input type="text" id="yourLocation" placeholder="Your Location" required />
+      <input type="text" id="destination" placeholder="Destination" required />
+      <input type="number" id="kms" placeholder="Kilometers (KMs)" />
+      <input type="date" id="startDate" required />
+      <input type="date" id="endDate" required />
+      <textarea id="notes" placeholder="Notes" rows="3"></textarea>
+      <button onclick="addTrip()">Add Trip</button>
+    </div>
+
+    <!-- Trip List -->
+    <div id="tripList">
+      <h2>My Trips</h2>
+      <div id="tripsContainer"></div>
+    </div>
+  </main>
+
+  <!-- Load Google Maps API -->
+  <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places"></script>
+
+  <script>
+    const navLinks = document.getElementById('navLinks');
+    function toggleMenu() { navLinks.classList.toggle('active'); }
+
+    let trips = JSON.parse(localStorage.getItem('trips')) || [];
+
+    function saveTrips() {
+      localStorage.setItem('trips', JSON.stringify(trips));
+    }
+
+    function renderTrips() {
+      const container = document.getElementById('tripsContainer');
+      container.innerHTML = '';
+      trips.forEach((trip, index) => {
+        const tripDiv = document.createElement('div');
+        tripDiv.className = 'trip';
+        tripDiv.innerHTML = `
+          <button class="deleteBtn" onclick="deleteTrip(${index})">Delete</button>
+          <button class="mapBtn" onclick="viewMap('${trip.yourLocation}', '${trip.destination}')">Maps</button>
+          <h3>From: ${trip.yourLocation} → ${trip.destination}</h3>
+          <p><strong>KMs:</strong> ${trip.kms}</p>
+          <p><strong>Dates:</strong> ${trip.startDate} to ${trip.endDate}</p>
+          <p><strong>Notes:</strong> ${trip.notes}</p>
+        `;
+        container.appendChild(tripDiv);
+      });
+    }
+
+    // Function to calculate distance using Google Distance Matrix API
+    function calculateDistance() {
+      const origin = document.getElementById('yourLocation').value;
+      const destination = document.getElementById('destination').value;
+
+      if (origin && destination) {
+        const service = new google.maps.DistanceMatrixService();
+        service.getDistanceMatrix(
+          {
+            origins: [origin],
+            destinations: [destination],
+            travelMode: 'DRIVING',
+          },
+          (response, status) => {
+            if (status === 'OK') {
+              const distanceValue = response.rows[0].elements[0].distance.value / 1000; // in KM
+              document.getElementById('kms').value = distanceValue.toFixed(2);
+            } else {
+              alert('Error calculating distance: ' + status);
+            }
+          }
+        );
+      }
+    }
+
+    document.getElementById('yourLocation').addEventListener('blur', calculateDistance);
+    document.getElementById('destination').addEventListener('blur', calculateDistance);
+
+    function addTrip() {
+      const yourLocation = document.getElementById('yourLocation').value.trim();
+      const destination = document.getElementById('destination').value.trim();
+      const kms = document.getElementById('kms').value.trim();
+      const startDate = document.getElementById('startDate').value;
+      const endDate = document.getElementById('endDate').value;
+      const notes = document.getElementById('notes').value.trim();
+
+      if (!yourLocation || !destination || !kms || !startDate || !endDate) {
+        alert('Please fill in all required fields.');
+        return;
+      }
+
+      const newTrip = { yourLocation, destination, kms, startDate, endDate, notes };
+      trips.push(newTrip);
+      saveTrips();
+      renderTrips();
+
+      document.getElementById('yourLocation').value = '';
+      document.getElementById('destination').value = '';
+      document.getElementById('kms').value = '';
+      document.getElementById('startDate').value = '';
+      document.getElementById('endDate').value = '';
+      document.getElementById('notes').value = '';
+    }
+
+    function deleteTrip(index) {
+      trips.splice(index, 1);
+      saveTrips();
+      renderTrips();
+    }
+
+    // Function to open Google Maps in a new tab
+    function viewMap(origin, destination) {
+      const url = `https://www.google.com/maps/dir/?api=1&origin=${encodeURIComponent(origin)}&destination=${encodeURIComponent(destination)}&travelmode=driving`;
+      window.open(url, '_blank');
+    }
+
+    renderTrips();
+  </script>
+</body>
+</html>
